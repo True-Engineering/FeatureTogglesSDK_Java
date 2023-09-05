@@ -1,0 +1,12 @@
+{
+  "feature.id": {
+    "uid": "feature.id",
+    "enable": true,
+    "description": "description",
+    "permissions": [],
+    "customProperties": {
+      "props1": "value1",
+      "props2": "value2"
+    }
+  }
+}

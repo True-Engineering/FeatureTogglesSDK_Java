@@ -1,0 +1,85 @@
+plugins {
+    id 'nebula.optional-base' version '5.0.3' apply false
+    id "org.springframework.boot" version '2.3.12.RELEASE' apply false
+    id "io.spring.dependency-management" version '1.0.10.RELEASE' apply false
+}
+
+ext {
+    set('springCloudVersion', "Hoxton.SR8")
+    jarName = project.name
+}
+
+subprojects {
+    repositories {
+        mavenCentral()
+    }
+
+    apply plugin: 'checkstyle'
+    apply plugin: 'java'
+    apply plugin: 'java-library'
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
+    apply plugin: 'maven-publish'
+
+    compileJava {
+        options.warnings = false
+        options.deprecation = false
+        options.compilerArgs += ["-Xdoclint:none", "-Xlint:unchecked", "-nowarn"]
+    }
+
+    clean.doFirst {
+        delete "${rootDir}/out"
+        println "${rootDir}/out"
+
+        delete "${rootDir}/src/main/generated"
+        println "${rootDir}/src/main/generated"
+    }
+
+    checkstyle {
+        toolVersion = '8.23'
+        configFile = rootProject.file("config/checkstyle/checkstyle.xml")
+        showViolations = false
+    }
+
+    checkstyleMain {
+        source = 'src/main/java'
+    }
+
+    checkstyleTest {
+        source = 'src/test/java'
+    }
+
+    dependencyManagement {
+        imports {
+            mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+        }
+    }
+
+    publishing {
+        publications {
+            maven(MavenPublication) {
+                from components.java
+                version(System.getenv('GITVERSION_ASSEMBLYSEMFILEVER'))
+
+                versionMapping {
+                    usage('java-api') {
+                        fromResolutionOf('runtimeClasspath')
+                    }
+                    usage('java-runtime') {
+                        fromResolutionResult()
+                    }
+                }
+            }
+        }
+        repositories {
+          maven {
+            name = "GitHubPackages"
+            url = "https://maven.pkg.github.com/True-Engineering/FeatureTogglesSDK_Java"
+            credentials {
+              username = System.getenv("GITHUB_ACTOR")
+              password = System.getenv("GITHUB_TOKEN")
+            }
+          }
+        }
+    }
+}

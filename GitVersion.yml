@@ -1,0 +1,18 @@
+mode: ContinuousDelivery
+assembly-versioning-scheme: MajorMinorPatch
+assembly-file-versioning-scheme: MajorMinorPatch
+assembly-file-versioning-format: '{Major}.{Minor}.{Patch}'
+increment: Minor
+branches:
+  master:
+    regex: ^master$
+    mode: ContinuousDelivery
+    tag: ''
+    increment: Minor
+    prevent-increment-of-merged-branch-version: false
+    track-merge-target: false
+    tracks-release-branches: false
+    is-release-branch: true
+ignore:
+  sha: []
+merge-message-formats: {}

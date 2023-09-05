@@ -1,0 +1,38 @@
+plugins {
+    id 'org.springframework.boot'
+    id 'io.spring.dependency-management'
+    id 'nebula.optional-base'
+}
+
+group = 'ru.trueengineering'
+sourceCompatibility = '8'
+targetCompatibility = '8'
+
+dependencies {
+    api project(':feature-flag-sdk-core')
+
+    implementation 'org.springframework.boot:spring-boot-starter'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
+    implementation project(':feature-flag-sdk-core')
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+}
+
+bootJar {
+    enabled = false
+    classifier 'boot'
+}
+
+jar {
+    enabled = true
+    getDestinationDirectory().set(new File("build/jar"))
+    archiveName("${project.name}-${System.getenv('GITVERSION_ASSEMBLYSEMFILEVER')}.jar")
+}
+
+test {
+    useJUnitPlatform()
+}

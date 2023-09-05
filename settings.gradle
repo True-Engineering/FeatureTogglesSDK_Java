@@ -1,0 +1,3 @@
+rootProject.name = 'true-feature-flag-starter'
+include 'feature-flag-sdk-core'
+include 'feature-flags'

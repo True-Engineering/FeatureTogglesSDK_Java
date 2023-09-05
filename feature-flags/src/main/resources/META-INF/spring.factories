@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  ru.trueengineering.feature.flag.starter.configuration.FeatureFlagClientConfiguration, \
+  ru.trueengineering.feature.flag.starter.configuration.FeatureFlagContextPropagationAutoConfiguration

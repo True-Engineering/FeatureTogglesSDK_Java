@@ -1,0 +1,22 @@
+{
+  "ff.id": {
+    "uid": "ff.id",
+    "enable": "false",
+    "description": "some description",
+    "group": "group #1",
+    "permissions": [
+      "roler_1"
+    ],
+    "customProperties": {
+      "key 1": "value_1",
+      "key 2": "value_2"
+    },
+    "flippingStrategy": {
+      "className": "name",
+      "initParams": {
+        "param_1": "value_1",
+        "param 2": "value_2"
+      }
+    }
+  }
+}
